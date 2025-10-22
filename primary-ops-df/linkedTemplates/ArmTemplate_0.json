@@ -202,7 +202,11 @@
 								"Content-Type": "application/json"
 							},
 							"url": "https://prod-07.centralus.logic.azure.com:443/workflows/534d177ebbe44c20999357018b31fb6b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=yN7dBQT0LC33eo_X-niXYOsCsrJaSOhDp2GROEaiqTI",
-							"body": "{\n  \"subject\": \"ADF Copy Activity Success\",\n  \"body\": \"Pipeline Copy activity,\n  \"to\": \"ajayckt917@outlook.com\"\n}\n"
+							"body": {
+								"subject": "ADF Copy Activity Success",
+								"body": "Pipeline Copy activity",
+								"to": "ajayckt917@outlook.com"
+							}
 						}
 					}
 				],
