@@ -70,7 +70,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "netflix_directors.csv",
+						"fileName": {
+							"value": "netflix_directors_@{formatDateTime(utcNow(), 'yyyyMMdd_HHmmss')}.csv",
+							"type": "Expression"
+						},
 						"folderPath": "bronze",
 						"fileSystem": "raw"
 					},
@@ -144,7 +147,8 @@
 							"sink": {
 								"type": "DelimitedTextSink",
 								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
 								},
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
@@ -218,6 +222,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Netflix_directorCSVDataset')]",
 				"[concat(variables('factoryId'), '/datasets/NetflixDirectorsCSVDatasetSink')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 5,
+						"startTime": "2025-10-22T13:57:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
 			]
 		}
 	]
