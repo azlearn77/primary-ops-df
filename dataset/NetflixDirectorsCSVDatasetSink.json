@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "netflix_directors.csv",
+				"fileName": {
+					"value": "netflix_directors_@{formatDateTime(utcNow(), 'yyyyMMdd_HHmmss')}.csv",
+					"type": "Expression"
+				},
 				"folderPath": "bronze",
 				"fileSystem": "raw"
 			},
